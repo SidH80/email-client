@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject } from "rxjs";
-import { tap } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 interface UsernameAvailableResponse {
   available: boolean;
@@ -13,20 +13,25 @@ interface SignupCredentials {
   passwordConfirmation: string;
 }
 
+interface SignupResponse {
+  username: string;
+}
+
 interface SignedinResponse {
   authenticated: boolean;
   username: string;
 }
 
-interface SignupResponse {
+interface SigninCredentials {
   username: string;
+  password: string;
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
 export class AuthService {
-  rootUrl = "https://api.angular-email.com";
+  rootUrl = 'https://api.angular-email.com';
   signedin$ = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) {}
@@ -35,7 +40,7 @@ export class AuthService {
     return this.http.post<UsernameAvailableResponse>(
       `${this.rootUrl}/auth/username`,
       {
-        username,
+        username
       }
     );
   }
@@ -61,11 +66,18 @@ export class AuthService {
   }
 
   signout() {
-    return this.http.post(`${this.rootUrl}/auth/signout`, {})
-      .pipe(
-        tap(() => {
-          this.signedin$.next(false);
-        })
-      );
+    return this.http.post(`${this.rootUrl}/auth/signout`, {}).pipe(
+      tap(() => {
+        this.signedin$.next(false);
+      })
+    );
+  }
+
+  signin(credentials: SigninCredentials) {
+    return this.http.post(`${this.rootUrl}/auth/signin`, credentials).pipe(
+      tap(() => {
+        this.signedin$.next(true);
+      })
+    );
   }
 }
