@@ -3,6 +3,6 @@
 </button>
 <app-modal *ngIf="showModal" (dismiss)="showModal = false">
     <h3 modalTitle>Compose</h3>
-   <app-email-form [email]="email" ></app-email-form>
+   <app-email-form [email]="email" (emailSubmit)="onSubmit($event)"></app-email-form>
 
 </app-modal>
