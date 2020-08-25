@@ -3,6 +3,7 @@
         "Dont",
         "Signin",
         "Signup",
-        "signout"
+        "signout",
+        "stackable"
     ]
 }

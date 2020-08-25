@@ -10,14 +10,14 @@ export class InputComponent implements OnInit {
   @Input() label: string;
   @Input() control: FormControl;
   @Input() inputType: string;
-  constructor() { }
+  @Input() controlType = 'input';
 
-  ngOnInit() {
-  }
+  constructor() {}
+
+  ngOnInit() {}
 
   showErrors() {
     const { dirty, touched, errors } = this.control;
-    return dirty && touched && errors
+    return dirty && touched && errors;
   }
-
 }
